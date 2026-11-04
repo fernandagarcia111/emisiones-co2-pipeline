@@ -1,0 +1,11 @@
+variable,nulos_iniciales,estrategia,justificacion,nulos_finales
+pais,0,Sin nulos,Columna completa en el original.,0
+anio,0,Sin nulos,Columna completa en el original.,0
+codigo_iso,7931,Recuperar Kosovo (XKX) y eliminar entidades que no son países,"El nulo identifica agregados (World, continentes). Kosovo es un país sin código ISO oficial y se recupera con el código de uso común.",0
+poblacion,9244,Mantener nulo,"Los nulos restantes corresponden a Antártida e Isla Christmas, sin población en la fuente. No hay otra fuente para recuperarla.",150
+pib,35160,Mantener nulo,Variable auxiliar con datos hasta 2022. Imputarla con media o cero inventaría producción económica.,4743
+co2_mt,21027,Interpolar brechas internas de hasta 5 años; mantener el resto,Una brecha corta entre dos años observados se aproxima bien con una recta. Un nulo al inicio de la serie significa que no hay registro.,897
+co2_per_capita_t,23902,Recalcular como co2 por población,Es una razón exacta entre dos variables ya disponibles.,980
+variacion_anual_pct,24172,Mantener nulo,El primer año de cada serie no tiene año anterior; la variación no está definida.,1068
+participacion_mundial_pct,22848,Recalcular como co2 país sobre co2 mundial,Se usa la serie mundial del mismo archivo.,897
+co2_acumulado_mt,22848,Interpolar brechas internas de hasta 5 años; mantener el resto,Mismo criterio que co2: es una serie monótona y creciente.,897
