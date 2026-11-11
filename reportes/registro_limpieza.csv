@@ -1,0 +1,16 @@
+etapa,accion,filas_afectadas,justificacion
+Limpieza,Normalizar y renombrar columnas,10,10 columnas renombradas al español para facilitar su uso y documentación.
+Limpieza,Eliminar espacios sobrantes en texto,0,Evita categorías distintas para un mismo país.
+Nulos,Recuperar codigo_iso de Kosovo (XKX),174,"Kosovo es un país, no un agregado. XKX es el código de uso común (no es oficial ISO)."
+Limpieza,Eliminar 35 entidades que no son países,7757,"World, continentes, grupos de ingreso y regiones duplican a los países y distorsionan rankings. World se conserva aparte."
+Limpieza,Eliminar registros anteriores a 1950,26229,Antes de 1950 la cobertura es escasa y la mayoría de los nulos se concentra ahí. Kioto (1997) y París (2015) quedan dentro.
+Limpieza,"Eliminar países sin datos de CO2 (Monaco, San Marino, Vatican)",225,No aportan información sobre la variable principal del proyecto.
+Limpieza,Eliminar filas duplicadas,0,Registro idéntico. No se encontraron en este dataset.
+Limpieza,Revisar pares pais-anio repetidos,0,El par pais-anio debe ser único. No se encontraron repetidos.
+Nulos,Interpolar brechas cortas en co2_mt,2,Brechas internas de hasta 5 años entre datos observados.
+Nulos,Interpolar brechas cortas en co2_acumulado_mt,2,Brechas internas de hasta 5 años entre datos observados.
+Nulos,Recalcular co2_per_capita_t,2,"Razón entre co2 y población, ambas disponibles."
+Nulos,Recalcular participacion_mundial_pct,2,Co2 del país sobre co2 mundial del mismo año.
+Nulos,Mantener nulos en poblacion,150,Nulo con significado: sin población en la fuente. No se reemplaza por cero ni por promedio.
+Nulos,Mantener nulos en pib,4743,Nulo con significado: sin datos de PIB en la fuente. No se reemplaza por cero ni por promedio.
+Nulos,Mantener nulos en variacion_anual_pct,1068,Nulo con significado: primer año de cada serie. No se reemplaza por cero ni por promedio.

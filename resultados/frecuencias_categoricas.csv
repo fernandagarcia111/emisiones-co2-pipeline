@@ -1,0 +1,8 @@
+variable,categoria,frecuencia,porcentaje
+periodo_politica,pre_kioto,10152,62.7
+periodo_politica,kioto_a_paris,3888,24.0
+periodo_politica,post_paris,2160,13.3
+nivel_per_capita,bajo,7696,50.6
+nivel_per_capita,medio,3503,23.0
+nivel_per_capita,alto,2684,17.6
+nivel_per_capita,muy_alto,1337,8.8

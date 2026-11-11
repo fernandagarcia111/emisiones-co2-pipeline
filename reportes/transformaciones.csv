@@ -1,0 +1,11 @@
+variable_original,transformacion,resultado,tipo_final
+poblacion,float64 a entero con nulos (astype Int64),poblacion,Int64
+pais,texto a categoría,pais,category
+codigo_iso,object a string,codigo_iso,string
+anio,"pd.to_datetime(anio, format='%Y')",fecha,datetime64[ns]
+anio,Extraer década: anio // 10 * 10,decada,int64
+anio,"Clasificar por rangos (pd.cut): hasta 1996, 1997-2014, desde 2015",periodo_politica,string
+co2_mt,Cambio de unidad: Mt a Gt (dividir por 1000),co2_gt,float64
+co2_mt y pib,Nueva variable: co2_mt * 1e9 / pib,co2_por_pib_kg,float64
+co2_per_capita_t,"Clasificar por rangos: hasta 2, 2-6, 6-12 y más de 12 t por persona",nivel_per_capita,string
+co2_per_capita_t,Marcar valores mayores a 100 t por persona,atipico_per_capita,bool

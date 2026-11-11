@@ -1,0 +1,174 @@
+
+======================================================================
+ETAPA 1: Carga de datos originales
+======================================================================
+Archivo: datos/originales/owid-co2-data.csv
+Huella SHA-256: 7f78e2b218ce4bb8...
+Dimensiones: (50411, 79)
+
+======================================================================
+ETAPA 2: Diagnóstico de calidad
+======================================================================
+Filas: 50,411   Columnas: 79
+Tipos de columnas: {'float64': 76, 'str': 2, 'int64': 1}
+Valores nulos (79 columnas): 2,105,184
+Filas duplicadas: 0
+Pares country-year repetidos: 0
+
+Valores nulos en las variables del diccionario:
+                  nulos  porcentaje
+gdp               35160        69.7
+co2_growth_prct   24172        47.9
+co2_per_capita    23902        47.4
+share_global_co2  22848        45.3
+cumulative_co2    22848        45.3
+co2               21027        41.7
+population         9244        18.3
+iso_code           7931        15.7
+year                  0         0.0
+country               0         0.0
+
+Valores fuera de rango por variable:
+year                 0
+population           0
+gdp                  0
+co2                  0
+co2_per_capita      36
+share_global_co2     0
+cumulative_co2       0
+dtype: int64
+
+Entidades sin iso_code (agregados o regiones): 36
+
+df[variables].info():
+<class 'pandas.DataFrame'>
+RangeIndex: 50411 entries, 0 to 50410
+Data columns (total 10 columns):
+ #   Column            Non-Null Count  Dtype  
+---  ------            --------------  -----  
+ 0   country           50411 non-null  str    
+ 1   year              50411 non-null  int64  
+ 2   iso_code          42480 non-null  str    
+ 3   population        41167 non-null  float64
+ 4   gdp               15251 non-null  float64
+ 5   co2               29384 non-null  float64
+ 6   co2_per_capita    26509 non-null  float64
+ 7   co2_growth_prct   26239 non-null  float64
+ 8   share_global_co2  27563 non-null  float64
+ 9   cumulative_co2    27563 non-null  float64
+dtypes: float64(7), int64(1), str(2)
+memory usage: 3.8 MB
+
+======================================================================
+ETAPA 3: Limpieza
+======================================================================
+Filas tras la limpieza: 16,200
+Variables conservadas: 10 de 79
+
+======================================================================
+ETAPA 4: Tratamiento de nulos
+======================================================================
+                 variable  nulos_iniciales                                       estrategia  nulos_finales
+                     pais                0                                        Sin nulos              0
+                     anio                0                                        Sin nulos              0
+               codigo_iso             7931 Recuperar Kosovo (XKX) y eliminar entidades q...              0
+                poblacion             9244                                    Mantener nulo            150
+                      pib            35160                                    Mantener nulo           4743
+                   co2_mt            21027 Interpolar brechas internas de hasta 5 años; ...            897
+         co2_per_capita_t            23902                Recalcular como co2 por población            980
+      variacion_anual_pct            24172                                    Mantener nulo           1068
+participacion_mundial_pct            22848       Recalcular como co2 país sobre co2 mundial            897
+         co2_acumulado_mt            22848 Interpolar brechas internas de hasta 5 años; ...            897
+
+Registro de acciones (se exporta a reportes/registro_limpieza.csv):
+                                                        accion  filas_afectadas
+                               Normalizar y renombrar columnas               10
+                          Eliminar espacios sobrantes en texto                0
+                          Recuperar codigo_iso de Kosovo (XKX)              174
+                       Eliminar 35 entidades que no son países             7757
+                          Eliminar registros anteriores a 1950            26229
+Eliminar países sin datos de CO2 (Monaco, San Marino, Vatican)              225
+                                     Eliminar filas duplicadas                0
+                             Revisar pares pais-anio repetidos                0
+                           Interpolar brechas cortas en co2_mt                2
+                 Interpolar brechas cortas en co2_acumulado_mt                2
+                                   Recalcular co2_per_capita_t                2
+                          Recalcular participacion_mundial_pct                2
+                                   Mantener nulos en poblacion              150
+                                         Mantener nulos en pib             4743
+                         Mantener nulos en variacion_anual_pct             1068
+
+======================================================================
+ETAPA 5: Transformaciones
+======================================================================
+variable_original          resultado     tipo_final
+        poblacion          poblacion          Int64
+             pais               pais       category
+       codigo_iso         codigo_iso         string
+             anio              fecha datetime64[us]
+             anio             decada          int64
+             anio   periodo_politica         string
+           co2_mt             co2_gt        float64
+     co2_mt y pib     co2_por_pib_kg        float64
+ co2_per_capita_t   nivel_per_capita         string
+ co2_per_capita_t atipico_per_capita           bool
+
+======================================================================
+ETAPA 6: Validación
+======================================================================
+Validación superada: columnas, tipos, duplicados, categorías y rangos.
+Valores fuera de rango sin tratar: 0
+Valores atípicos marcados (co2_per_capita_t > 100): 34
+
+======================================================================
+ETAPA 7: Exportación
+======================================================================
+Dataset limpio: datos/procesados/dataset_limpio.csv  (16200, 17)
+Serie mundial: datos/procesados/serie_mundial.csv  (75, 4)
+
+Comparación antes y después:
+                                   indicador   antes  despues
+                                       Filas   50411    16200
+                                    Columnas      79       17
+          Valores nulos (todas las columnas) 2105184    16470
+Valores nulos (10 variables del diccionario)  167132     9632
+                            Filas duplicadas       0        0
+                      Valores fuera de rango      36        0
+                     Variables transformadas       0        7
+                            Variables nuevas       0        7
+
+Archivo original sin modificaciones: sí
+
+df.info() del dataset limpio:
+<class 'pandas.DataFrame'>
+RangeIndex: 16200 entries, 0 to 16199
+Data columns (total 17 columns):
+ #   Column                     Non-Null Count  Dtype         
+---  ------                     --------------  -----         
+ 0   pais                       16200 non-null  category      
+ 1   codigo_iso                 16200 non-null  string        
+ 2   anio                       16200 non-null  int64         
+ 3   fecha                      16200 non-null  datetime64[us]
+ 4   decada                     16200 non-null  int64         
+ 5   periodo_politica           16200 non-null  string        
+ 6   poblacion                  16050 non-null  Int64         
+ 7   pib                        11457 non-null  float64       
+ 8   co2_mt                     15303 non-null  float64       
+ 9   co2_gt                     15303 non-null  float64       
+ 10  co2_per_capita_t           15220 non-null  float64       
+ 11  nivel_per_capita           15220 non-null  string        
+ 12  atipico_per_capita         16200 non-null  bool          
+ 13  co2_por_pib_kg             11239 non-null  float64       
+ 14  variacion_anual_pct        15132 non-null  float64       
+ 15  participacion_mundial_pct  15303 non-null  float64       
+ 16  co2_acumulado_mt           15303 non-null  float64       
+dtypes: Int64(1), bool(1), category(1), datetime64[us](1), float64(8), int64(2), string(3)
+memory usage: 1.9 MB
+
+df[columnas].sample(5, random_state=1):
+             pais  anio periodo_politica  co2_mt  co2_per_capita_t nivel_per_capita  atipico_per_capita
+12131      Rwanda  2006    kioto_a_paris   0.514             0.055             bajo               False
+5653      Georgia  1978        pre_kioto  12.339             2.423            medio               False
+11342      Panama  1967        pre_kioto   2.150             1.548             bajo               False
+9804   Montserrat  2004    kioto_a_paris   0.048            10.489             alto               False
+15155      Uganda  1955        pre_kioto   0.264             0.040             bajo               False
